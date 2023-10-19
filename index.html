@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>毘沙門天採集地テーブル</title>
+    <style>
+        h1, h2 {
+            margin: 0.5em;
+            text-align: center;
+        }
+        table, th, td {
+            margin: auto;
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+            
+        }
+
+        td {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-right: 10px;
+            padding-left: 10px;
+            cursor: pointer;
+            border-top: 0px;
+            border-bottom: 0px;
+        }
+
+        td.head {
+            border-bottom: 1px solid black;;
+        }
+
+        td.x {
+            border-right: 0px;
+        }
+
+        td.y {
+            border-left: 0px;
+        }
+
+        td.c {
+            text-align: center;
+        }
+
+        td.r {
+            text-align: right;
+        }
+
+        td.kinai {
+            background-color: #FCE4D6;
+        }
+
+        td.chubu-mino {
+            background-color: #E2EFDA;
+        }
+
+        td.chubu-kaga {
+            background-color: #fff2cc;
+        }
+
+        td.hokuriku {
+            background-color: #ddebf7;
+        }
+
+        td.kitakyushu {
+            background-color: #FFE0FF;
+        }
+
+        /* Styles for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: -300px; /* Start off the top of the viewport */
+            opacity: 0;
+            transform: translateX(-50%);
+            width: 250px;
+            /* background-color: rgba(0,0,0,0.5); */
+            z-index: 1;
+            text-align: center;
+            animation: slideDownFadeIn 0.5s forwards;
+        }
+
+        @keyframes slideDownFadeIn {
+            0% {
+                top: -300px;
+                opacity: 0;
+            }
+            100% {
+                top: 20px;
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 5px; /* Rounded corners */
+        }
+    </style>
+</head>
+
+<body>
+<h1>毘沙門天</h1>
+<h2>採集地 Lv6 テーブル</h2>
+<table>
+    <tbody>
+        <!-- Generate table rows and cells with random numbers -->
+        <script>
+            const coords = {
+                ichiba:   [[1199, 881, 0], [1278, 862, 0], [1284, 867, 0], [1298, 860, 0], [1302, 855, 0], [1296, 873, 0], [1313, 846, 0], [1342, 862, 0], [1338, 863, 0], [1343, 864, 0], [1360, 858, 0], [1354, 854, 0], [1369, 841, 0], [1393, 820, 0], [1389, 831, 0], [1383, 827, 0], [1371, 813, 0], [1368, 825, 0], [1339, 821, 0], [1346, 818, 0], [1410, 857, 1], [1442, 870, 1], [1455, 822, 1], [1433, 775, 1], [1482, 806, 1], [1569, 821, 2], [1873, 472, 3], [2227, 386, 3], [2250, 379, 3], [2253, 389, 3], [2264, 408, 3], [2304, 384, 3], [2437, 406, 3], [580, 1679, 4], [624, 1697, 4]],
+                nouchi:   [[1293, 857, 0], [1313, 843, 0], [1309, 861, 0], [1328, 856, 0], [1333, 856, 0], [1336, 859, 0], [1346, 864, 0], [1356, 864, 0], [1355, 852, 0], [1376, 838, 0], [1382, 838, 0], [1385, 844, 0], [1399, 822, 0], [1394, 815, 0], [1378, 822, 0], [1382, 814, 0], [1375, 829, 0], [1368, 824, 0], [1362, 810, 0], [1359, 809, 0], [1358, 813, 0], [1357, 817, 0], [1360, 822, 0], [1405, 861, 1], [1457, 821, 1], [1467, 790, 1], [1492, 708, 1], [1508, 795, 1], [1498, 818, 1], [1526, 833, 2], [2281, 397, 3], [2283, 399, 3], [590, 1685, 4], [613, 1685, 4]],
+                seizai:   [[1274, 856, 0], [1282, 862, 0], [1283, 867, 0], [1295, 852, 0], [1309, 862, 0], [1306, 853, 0], [1313, 845, 0], [1316, 848, 0], [1342, 857, 0], [1345, 868, 0], [1336, 877, 0], [1362, 840, 0], [1365, 846, 0], [1389, 821, 0], [1366, 807, 0], [1360, 824, 0], [1350, 833, 0], [1357, 801, 0], [1347, 827, 0], [1463, 778, 1], [1480, 784, 1], [1421, 778, 1], [1476, 710, 1], [1503, 815, 1], [1516, 841, 1], [1528, 829, 2], [1523, 849, 2], [1516, 857, 2], [1941, 536, 3], [2288, 404, 3], [2306, 386, 3], [2461, 391, 3]],
+                saikutsu: [[1289, 858, 0], [1291, 862, 0], [1294, 859, 0], [1315, 858, 0], [1358, 842, 0], [1395, 845, 0], [1378, 826, 0], [1386, 823, 0], [1381, 813, 0], [1374, 830, 0], [1372, 823, 0], [1357, 809, 0], [1352, 830, 0], [1439, 865, 1], [1404, 806, 1], [1406, 791, 1], [1407, 794, 1], [1404, 801, 1], [1427, 807, 1], [1448, 801, 1], [1451, 784, 1], [1482, 697, 1], [1586, 821, 2], [1613, 833, 2], [1696, 817, 2], [1779, 813, 2], [2232, 384, 3], [2264, 382, 3], [2282, 403, 3], [2280, 333, 3]],
+            }
+            for (let i = 0; i < 36; i++) {
+                document.write('<tr>');
+                for (let j = 0; j < 9; j++) {
+                    if (i == 0){
+                        document.write(`<td class="c head"></td><td colspan="2" class="c head">市場</td><td colspan="2" class="c head">農地</td><td colspan="2" class="c head">製材所</td><td colspan="2" class="c head">採掘場</td>`);
+                        break;
+                    }
+                    if (j == 0){
+                        document.write(`<td class="r">${i}</td>`);
+                    }else {
+                        let randomNum = Math.floor(Math.random() * 10000);
+                        let coord = []
+                        let num = -1;
+                        // 0: kinai, 1: chubu-mino, 2: chubu-kaga, 3: hokuriku, 4: kitakyushu, 
+                        let region = -1;
+
+                        if (j == 1 || j === 2){
+                            if (i-1 < coords.ichiba.length){
+                                coord = coords.ichiba[i-1]
+                                region = coord[2]
+                            }
+                        }else if (j == 3 || j === 4){
+                            if (i-1 < coords.nouchi.length){
+                                coord = coords.nouchi[i-1]
+                                region = coord[2]
+                            }
+                        }else if (j == 5 || j === 6){
+                            if (i-1 < coords.seizai.length){
+                                coord = coords.seizai[i-1]
+                                region = coord[2]
+                            }
+                        }else if (j == 7 || j === 8){
+                            if (i-1 < coords.saikutsu.length){
+                                coord = coords.saikutsu[i-1]
+                                region = coord[2]
+                            }
+                        }
+                        
+                        if (coord.length > 0){
+                            if (j % 2 == 1){
+                                num = coord[0]
+                            }else {
+                                num = coord[1]
+                            }
+                        }
+
+                        let classStr = "r"
+                        if (j % 2 == 1){
+                            classStr += " x"
+                        }else {
+                            classStr += " y"
+                        }
+
+                        if (region == 0){
+                            classStr += " kinai"
+                        }else if (region == 1){
+                            classStr += " chubu-mino"
+                        }else if (region == 2){
+                            classStr += " chubu-kaga"
+                        }else if (region == 3){
+                            classStr += " hokuriku"
+                        }else if (region == 4){
+                            classStr += " kitakyushu"
+                        }
+
+                        if (num == -1){
+                            document.write(`<td class="${classStr}"></td>`);
+                        }else {
+                            document.write(`<td class="${classStr}" onclick="copyToClipboard(${num})">${num}</td>`);
+                        }
+                    }
+                }
+                document.write('</tr>');
+            }
+        </script>
+    </tbody>
+</table>
+
+<!-- Modal Window -->
+<div class="modal" id="myModal">
+    <div class="modal-content" id="modalText">
+    </div>
+</div>
+
+<script>
+    function copyToClipboard(text) {
+        // Create a dummy textarea element to use the browser's copy command
+        var dummy = document.createElement("textarea");
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+
+        // Display the modal with the copied value
+        let modal = document.getElementById('myModal');
+        let modalText = document.getElementById('modalText');
+        modalText.innerHTML = `${text} がコピーされました`;
+        modal.style.display = "block";
+        
+        // Hide the modal after 3 seconds (1 second of visibility + 2 seconds display time)
+        setTimeout(() => {
+            modal.style.display = "none";
+        }, 3000);
+    }
+</script>
+
+</body>
+</html>
